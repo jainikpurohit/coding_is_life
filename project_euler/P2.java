@@ -30,11 +30,17 @@ public class Solution {
         long c = 0;
         long sum = 0;
         
+        // did not use recursion as it might lead to too many recursive call problem.
+        
+        // check if value of n is greater than 2 as first even fibonacci is at position 2.
         if(n > 1){
+            // iterate until current fibonacci number is less than or equal to value of n
             while( c <= n){
+                // if its even then add it to the sum
                 if(b % 2 == 0){
                     sum += b;
                 }
+                // compute next number
                 c = a+b;
                 a = b;
                 b = c;
