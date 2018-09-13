@@ -1,0 +1,54 @@
+/* Problem Statment:
+
+The sum of the primes below 10 is 2 + 3 + 5 + 7 = 17.
+
+Find the sum of all the primes below two million.
+
+*/
+
+import java.io.*;
+import java.util.*;
+import java.text.*;
+import java.math.*;
+import java.util.regex.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        int t = in.nextInt();
+        for(int a0 = 0; a0 < t; a0++){
+            int n = in.nextInt();
+            findSum(n);
+        }
+    }
+    
+    public static void findSum(int n){
+        long sum = 0;
+        boolean[] prims = new boolean[n+1];
+        Arrays.fill(prims, 0, prims.length, true);
+        
+        int k = 4;
+        while(k <= n){
+            prims[k] = false;
+            k+=2;
+        }
+        
+        for(int i=3; i*i <= n; i = i+2){
+            if(!prims[i]){
+               continue;
+            }
+            for(int j=i*i; j <= n; j+=i){
+                prims[j]=false;
+            }
+        }
+
+        for(int i=2; i<=n; i++){
+            if(prims[i]){
+                sum += i;
+            }
+        }
+        
+        System.out.println(sum);
+    }
+}
