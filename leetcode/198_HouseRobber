@@ -1,0 +1,46 @@
+class Solution {
+    
+    /* Iterative Solution */
+    /*public int rob(int[] nums) {
+        
+        if(nums == null || nums.length == 0){
+            return 0;
+        }
+        
+        int max[] = new int[nums.length];
+        max[0] = nums[0];
+        if(nums.length > 1){
+            max[1] = Math.max(nums[0], nums[1]);
+        }
+        
+        for(int i = 2; i < nums.length; i++){
+            max[i] = Math.max(max[i-1], max[i-2] + nums[i]);
+        }
+        
+        return max[nums.length - 1];
+    }*/
+    
+    /* Dynamic programming approach */
+     public int rob(int[] nums) {
+        int index = nums.length - 1;
+        int[] memo = new int[nums.length];
+        Arrays.fill(memo, -1);
+        return maxRob(nums, index, memo);
+    }
+    
+    public int maxRob(int[] nums, int i, int[] memo){
+        if(i < 0){
+            return 0;
+        } else if(i == 0){
+            return nums[0];
+        } else if (memo[i] != -1){
+            return memo[i];
+        }
+        
+        memo[i] = Math.max(maxRob(nums, i - 1, memo), maxRob(nums, i - 2, memo) + nums[i]);
+        return memo[i];
+    } 
+    
+    // if we don't use memo in above function then it will work recursively, which is a slower solution
+
+}
