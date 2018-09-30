@@ -43,3 +43,17 @@ class Solution {
         return false;
     }
 }
+
+// Without use of any additional data structures
+
+public boolean canConstruct(String ransomNote, String magazine) {
+        int[] index = new int[128];
+        for(char c: ransomNote.toCharArray()) {
+            int location = magazine.indexOf(c, index[c]);
+            if(location < 0) {
+                return false;
+            }
+            index[c] = location + 1;
+        }
+        return true;
+    }
