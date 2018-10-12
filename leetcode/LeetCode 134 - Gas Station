@@ -1,0 +1,56 @@
+/* Problem Statement:
+
+There are N gas stations along a circular route, where the amount of gas at station i is gas[i].
+
+You have a car with an unlimited gas tank and it costs cost[i] of gas to travel from station i to its next station (i+1). You begin the journey with an empty tank at one of the gas stations.
+
+Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.
+
+Note:
+
+If there exists a solution, it is guaranteed to be unique.
+Both input arrays are non-empty and have the same length.
+Each element in the input arrays is a non-negative integer.
+
+*/
+
+class Solution {
+    public int canCompleteCircuit(int[] gas, int[] cost) {
+        // return canComplete1(gas,cost);
+        return canComplete2(gas, cost);
+    }
+    
+    public int canComplete1(int[] gas, int[] cost){
+        for(int i = 0 ; i  < gas.length; i++){
+            int cap = gas[i] - cost[i];
+            if(cap >= 0){
+                int loop = (i == gas.length - 1) ? 0 : i + 1;
+                while(cap >= 0){
+                    cap = (cap + gas[loop]) - cost[loop];
+                    if(loop == i){
+                        return i;
+                    }
+                    loop = (loop == gas.length - 1) ? 0 : loop+1;
+                }
+            }
+        }
+        return -1; 
+    }
+    
+    public int canComplete2(int[] gas, int[] cost){
+        // idea here is if total diff of gas and cost is > 0 at the end that means we have cycle
+        int cap = 0, startPos = 0, curCap = 0;
+        for(int i = 0; i < gas.length; i++){
+            int diff = gas[i] - cost[i];
+            // tracking current capactity to retrive index
+            if(curCap < 0){
+                curCap = diff;
+                startPos = i;
+            } else {
+                curCap += diff;
+            }
+            cap += diff;
+        }
+        return (cap >= 0) ?  startPos : -1;
+    }
+}
